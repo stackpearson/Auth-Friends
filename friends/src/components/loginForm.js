@@ -20,29 +20,39 @@ class loginForm extends React.Component {
     
     login = e => {
         e.preventDefault();
-
         axios
-            .post()
+            .post('http://localhost:5000/api/login', this.state.credentials)
+            .then((res) => {
+                console.log('succesful login', res);
+                localStorage.setItem('authorizationToken', res.data.payload);
+                this.props.history.push('/friends');
+            })
+            .catch((err) => {
+                console.error('failed login', err.message);
+                localStorage.removeItem('authorizationToken');
+            });
     }
+
     render() {
         return (
             <div>
-                <div>
+                <form onSubmit={this.login}>
                     <input
                         type='text'
                         name='username'
                         placeholder='user name'
                         value={this.state.credentials.username}
+                        onChange={this.handleChanges}
                     />
-                </div>
-                <div>
                     <input
                         type='password'
                         name='password'
                         placeholder='password'
                         value={this.state.credentials.password}
+                        onChange={this.handleChanges}
                     />
-                </div>
+                    <button>Login</button>
+                </form>
             </div>
         )
     }

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
+// import {pullFriends} from './friendsPage';
 
 
 
- const AddFriend = () => {
-   
+ const AddFriend = (props) => {
+
     const [friend, setNewFriend] = useState({
         id: Date.now(),
         name: '',
@@ -13,6 +13,10 @@ import { axiosWithAuth } from '../utils/axiosWithAuth';
         email: ''
 
     })
+
+    
+
+    // const [updated, setUpdated] = useState(false)
 
     const handleChanges = e => {
         setNewFriend({...friend, [e.target.name]: e.target.value})
@@ -24,9 +28,13 @@ import { axiosWithAuth } from '../utils/axiosWithAuth';
 
         axiosWithAuth()
             .post('/friends', friend)
-            console.log(friend)
-            // .then(res => console.log('post success', res))
-            // .catch(err => console.log('post failed', err))
+            // console.log(friend)
+            .then(res => {
+                // console.log(res)
+            })
+            .catch(err => {
+                console.log('post failed', err)
+            })
 
 
     }
@@ -45,7 +53,6 @@ import { axiosWithAuth } from '../utils/axiosWithAuth';
                 <input value={friend.email} name='email' type='text' placeholder='email' onChange={handleChanges} />
             </label>
             <button type='submit'>Add Friend</button>
-
         </form>
     )
 

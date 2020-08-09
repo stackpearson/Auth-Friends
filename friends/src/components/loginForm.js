@@ -1,14 +1,16 @@
 import React from 'react';
-import axios from 'axios';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 class loginForm extends React.Component {
-    state = {
-        credentials: {
-            username: '',
-            password: ''
+
+
+        state = {
+            credentials: {
+                username: '',
+                password: ''
+            },
+            loading: false
         }
-    }
 
     handleChanges = e => {
         this.setState({
@@ -19,24 +21,33 @@ class loginForm extends React.Component {
         })
     }
     
-    login = e => {
+   
+    login = e => {  
         e.preventDefault();
-        axiosWithAuth()
+        this.setState({ loading: true}, () => {
+            // console.log(this.state.loading)
+            axiosWithAuth()
             .post('/login', this.state.credentials)
             .then((res) => {
-                console.log('succesful login', res);
+                this.setState({
+                    loading: false
+                })
+                // console.log('succesful login', res);
                 localStorage.setItem('authorizationToken', res.data.payload);
                 this.props.history.push('/friends');
             })
             .catch((err) => {
-                console.log('failed login', err);
+                // console.log('failed login', err);
                 localStorage.removeItem('authorizationToken');
             });
+        })
+        
     }
 
     render() {
+        const {loading} = this.state;
         return (
-            <div>
+            <div className='login-form'>
                 <form onSubmit={this.login}>
                     <input
                         type='text'
@@ -52,7 +63,10 @@ class loginForm extends React.Component {
                         value={this.state.credentials.password}
                         onChange={this.handleChanges}
                     />
-                    <button>Login</button>
+                    <button onClick={this.login}>
+                        { loading && <i className='fa fa-cog fa-spin' />}
+                        Login
+                    </button>
                 </form>
             </div>
         )

@@ -1,6 +1,7 @@
 import React from 'react';
 import {axiosWithAuth} from '../utils/axiosWithAuth';
 import AddFriend from './AddFriend'
+import PrivateRoute from './PrivateRoute';
 
 class friendsPage extends React.Component {
     state = {
@@ -12,7 +13,7 @@ class friendsPage extends React.Component {
       }
 
     pullFriends = () => {
-        axiosWithAuth().get('http://localhost:5000/api/friends')
+        axiosWithAuth().get('/friends')
         .then((res) => {
             console.log('succesful friends call', res)
             this.setState({
@@ -29,7 +30,7 @@ class friendsPage extends React.Component {
         <>
         <div className='friends-flex'>
             <div className='add-friend-container'>
-                <AddFriend />
+                <PrivateRoute component={AddFriend} />
             </div>
                 
             <div className='friends-container'>
@@ -37,7 +38,7 @@ class friendsPage extends React.Component {
                 <div className='friend' key={friend.id}>
                     <h3>{friend.name}</h3>
                     <p>Age: {friend.age}</p>
-                    <p>Email: {friend.email}</p>
+                    <p>{friend.email}</p>
                 </div>
             ))}
             </div>

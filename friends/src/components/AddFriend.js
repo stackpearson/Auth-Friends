@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 
 
  const AddFriend = () => {
    
-    const [newFriend, setNewFriend] = useState({
+    const [friend, setNewFriend] = useState({
+        id: Date.now(),
         name: '',
         age: '',
         email: ''
@@ -13,11 +15,18 @@ import axios from 'axios';
     })
 
     const handleChanges = e => {
-        setNewFriend({...newFriend, [e.target.name]: e.target.value})
+        setNewFriend({...friend, [e.target.name]: e.target.value})
+        // console.log('form changes', e.target.value)
     };
 
     const submitFriend = e => {
         e.preventDefault();
+
+        axiosWithAuth()
+            .post('/friends', friend)
+            console.log(friend)
+            // .then(res => console.log('post success', res))
+            // .catch(err => console.log('post failed', err))
 
 
     }
@@ -25,16 +34,17 @@ import axios from 'axios';
     return (
         <form onSubmit={submitFriend}>
             <label htmlFor='name'>
-                <input value={newFriend.name} name='Friend-name' type='text' placeholder='name' />
+                <input value={friend.name} name='name' type='text' placeholder='name' onChange={handleChanges} />
             </label>
 
             <label htmlFor='age'>
-                <input value={newFriend.age} name='age' type='text' placeholder='age' />
+                <input value={friend.age} name='age' type='text' placeholder='age' onChange={handleChanges} />
             </label>
 
             <label htmlFor='email'>
-                <input value={newFriend.email} name='email' type='text' placeholder='email' />
+                <input value={friend.email} name='email' type='text' placeholder='email' onChange={handleChanges} />
             </label>
+            <button type='submit'>Add Friend</button>
 
         </form>
     )

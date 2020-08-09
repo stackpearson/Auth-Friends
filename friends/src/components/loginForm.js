@@ -28,7 +28,7 @@ class loginForm extends React.Component {
                 this.props.history.push('/friends');
             })
             .catch((err) => {
-                console.error('failed login', err.message);
+                console.log('failed login', err);
                 localStorage.removeItem('authorizationToken');
             });
     }

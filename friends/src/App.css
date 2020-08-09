@@ -40,3 +40,41 @@ html {
     transform: rotate(360deg);
   }
 }
+
+.friends-container {
+  max-width: 1000 px;
+  justify-content: center;
+  display:flex;
+  flex-wrap: wrap;
+}
+
+.add-friend-container {
+  min-width: 300px;
+  border: 1px solid white;
+  margin: 10px;
+  padding: 10px;
+}
+
+.friend {
+  margin: 10px;
+  border: 5px solid white;
+  border-radius: 10px;
+  background-color: grey;
+  padding: 5px;
+}
+
+.friends-flex {
+  display: flex;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  margin: 15px;
+}
+
+.nav-button {
+  color: white;
+  text-decoration: none;
+  margin: 0px 15px;
+}

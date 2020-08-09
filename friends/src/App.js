@@ -5,16 +5,22 @@ import loginForm from './components/loginForm';
 import friendsPage from './components/friendsPage';
 import PrivateRoute from './components/PrivateRoute';
 
+
+
 function App() {
+
   return (
     <Router>
       <div className="App">
-        <Link to='/login'><div className='nav-button'>Login</div></Link>
-        <Link to='/friends'><div className='nav-button'>Friends</div></Link>
+        <nav>
+          <div><Link to='/login' className='nav-button'>Login</Link></div>
+          <div><Link to='/friends' className='nav-button'>Friends</Link></div>
+          <div><Link to='/login' className='nav-button' onClick={() => window.localStorage.clear()}>Log Out</Link></div>  
+        </nav>
       <Switch>
         <PrivateRoute exact path='/friends' component={friendsPage} />
         <Route path='/login' component={loginForm} />
-        <Route path='/login' component={loginForm} />
+        <Route component={loginForm} />
       </Switch>
       </div>
     </Router>
